@@ -114,11 +114,11 @@ async function serverrank() {
         let data = await axios.get(`http://${IP}:3000/botinfo`);
         let info = document.getElementById("info")
         info.innerHTML += `
-        <li class="list-group-item">서비스중인 서버<span class="badge">${data.data.servercount} 개</span></li>
-        <li class="list-group-item">서비스중인 채널<span class="badge">${data.data.channelcount} 개</span></li>
-        <li class="list-group-item">핵쟁이 신고 수<span class="badge">${data.data.hackcount} 건</span></li>
-        <li class="list-group-item">저장된 닉네임<span class="badge">${data.data.servercount} 개</span></li>
-        <li class="list-group-item">서버 로그<span class="badge">${data.data.servercount} 건</span></li>
+        <li class="list-group-item list-group-item-success">서비스중인 서버<span class="badge">${data.data.servercount} 개</span></li>
+        <li class="list-group-item list-group-item-info">서비스중인 채널<span class="badge">${data.data.channelcount} 개</span></li>
+        <li class="list-group-item list-group-item-success">핵쟁이 신고 수<span class="badge">${data.data.hackcount} 건</span></li>
+        <li class="list-group-item list-group-item-info">저장된 닉네임<span class="badge">${data.data.servercount} 개</span></li>
+        <li class="list-group-item list-group-item-success">서버 로그<span class="badge">${data.data.logcount} 건</span></li>
         `
 
     }
