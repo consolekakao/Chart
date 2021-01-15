@@ -12,6 +12,7 @@ app.get("/totalapicount",function(req,res){
         user: config.user,
         password: config.password,
         database: config.database,
+        multipleStatements:true
       });
 
       connection.connect();
@@ -60,5 +61,67 @@ app.get("/totalapicount",function(req,res){
     
         }
         )
+
+
+        app.get("/botlog",function(req,res){
+          let connection = mysql.createConnection({
+              host: config.host,
+              port: config.port,
+              user: config.user,
+              password: config.password,
+              database: config.database,
+            });
+      
+            connection.connect();
+            let result = [];
+            connection.query(`SELECT * from (select idx,date_format(time,'%y-%m-%d %h:%i:%s') as time,servername,channelname,usernick,usecommand,status FROM BotLog order by time desc limit 10) as a order by idx asc`
+            ,async function(err,rows){
+            for(let i=0;i<rows.length;i++){
+              let inData = {};
+              inData.time = encodeURI(rows[i].time).slice(3);
+              inData.servername = encodeURI(rows[i].servername);
+              inData.channelname = encodeURI(rows[i].channelname);
+              inData.usernick = encodeURI(rows[i].usernick);
+              inData.usecommand = encodeURI(rows[i].usecommand);
+              inData.status = encodeURI(rows[i].status);
+              result.push(inData)
+            }
+            res.send(result) 
+          })
+            
+      
+          }
+          )
+
+
+
+          app.get("/botinfo",async function(req,res){
+            let connection = mysql.createConnection({
+                host: config.host,
+                port: config.port,
+                user: config.user,
+                password: config.password,
+                database: config.database,
+                multipleStatements:true
+              });
+        
+              connection.connect();
+              let result = {};
+             await connection.query("SELECT count(*) as hackcount FROM BotHack;"+ "SELECT count(*) as channelcount FROM BotChannel;"+ 
+              "SELECT count(*) as cnt,servername from BotChannel group by servername;"+ "SELECT * FROM BotSaveNick;"+"SELECT count(*) as count from BotLog"
+              ,await function(err,rows){
+                result.hackcount = rows[0][0].hackcount;
+                result.channelcount = rows[1][0].channelcount;
+                result.servercount = rows[2].length;
+                result.nickcount = rows[3].length;
+                result.logcount = rows[4][0].count;
+              res.send(result); 
+            })
+              
+        
+            }
+            )
+
+
 
     app.listen(3000,() => console.log("start server"));
