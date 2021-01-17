@@ -41,6 +41,7 @@ app.get("/totalapicount",function(req,res){
             host: config.host,
             port: config.port,
             user: config.user,
+            
             password: config.password,
             database: config.database,
           });
@@ -102,7 +103,7 @@ app.get("/totalapicount",function(req,res){
                 user: config.user,
                 password: config.password,
                 database: config.database,
-                multipleStatements:true
+                multipleStatements:true //다중쿼리 사용여부
               });
         
               connection.connect();
