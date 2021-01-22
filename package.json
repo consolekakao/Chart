@@ -1,0 +1,22 @@
+{
+  "name": "chart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "chart.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/consolekakao/Chart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/consolekakao/Chart/issues"
+  },
+  "homepage": "https://github.com/consolekakao/Chart#readme",
+  "dependencies": {
+    "chart.js": "^2.9.4"
+  }
+}

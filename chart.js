@@ -1,5 +1,6 @@
 //const { default: axios } = require("axios");
 let IP = `34.64.145.224`;
+
 totalApiCount();
 serverrank();
 botLog();
@@ -117,5 +118,4 @@ async function botInfo() {
         <li class="list-group-item list-group-item-success">서버 로그<span class="badge">${data.data.logcount} 건</span></li>
         <li class="list-group-item list-group-item-info">총 요청건<span class="badge">${data.data.allcount} 건</span></li>
         `;
-  console.log(data);
 }

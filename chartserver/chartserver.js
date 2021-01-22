@@ -114,7 +114,6 @@ app.get("/botinfo", async function (req, res) {
       result.logcount = rows[4][0].count;
       result.allcount = rows[5][0].count;
       res.send(result);
-      console.log(result);
     }
   );
 });
