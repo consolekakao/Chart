@@ -113,6 +113,35 @@ app.get("/botinfo", async function (req, res) {
       result.nickcount = rows[3].length;
       result.logcount = rows[4][0].count;
       result.allcount = rows[5][0].count;
+      // result.allcountdaytime = rows[6][0].time;
+      // result.allcountdaycount = rows[6][0].count;
+      res.send(result);
+    }
+  );
+});
+
+app.get("/total", function (req, res) {
+  let connection = mysql.createConnection({
+    host: config.host,
+    port: config.port,
+    user: config.user,
+    password: config.password,
+    database: config.database,
+    multipleStatements: true,
+  });
+
+  connection.connect();
+  let result = [];
+  connection.query(
+    `select * from (select DATE_FORMAT(time,'%m-%d') as date,count(*) as cnt from BotChat
+    group by DATE_FORMAT(time,'%M%D') order by time desc limit 7) as a order by date asc`,
+    async function (err, rows) {
+      for (let i = 0; i < rows.length; i++) {
+        let inData = {};
+        inData.date = encodeURI(rows[i].date);
+        inData.cnt = encodeURI(rows[i].cnt);
+        result.push(inData);
+      }
       res.send(result);
     }
   );

@@ -5,6 +5,7 @@ totalApiCount();
 serverrank();
 botLog();
 botInfo();
+total();
 async function totalApiCount() {
   let labelDate = [];
   let totalApiCount = [];
@@ -23,6 +24,42 @@ async function totalApiCount() {
       datasets: [
         {
           label: "일자별 API 요청량",
+          data: totalApiCount,
+          backgroundColor: ["rgba(255, 99, 132, 0.2)"],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(255, 159, 64, 1)",
+          ],
+          borderWidth: 0,
+          order: 1,
+        },
+      ],
+    },
+  });
+}
+
+async function total() {
+  let labelDate = [];
+  let totalApiCount = [];
+  let data = await axios.get(`http://${IP}:3000/total`);
+
+  for (let i = 0; i < 7; i++) {
+    labelDate[i] = data.data[i].date;
+    totalApiCount[i] = data.data[i].cnt;
+  }
+
+  let ctx = document.getElementById("myChart").getContext("2d");
+  let myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: labelDate,
+      datasets: [
+        {
+          label: "일자별 총 API 요청량",
           data: totalApiCount,
           backgroundColor: ["rgba(255, 99, 132, 0.2)"],
           borderColor: [
