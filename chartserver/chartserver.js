@@ -104,7 +104,8 @@ app.get("/botinfo", async function (req, res) {
       "SELECT count(*) as channelcount FROM BotChannel;" +
       "SELECT count(*) as cnt,servername from BotChannel group by servername;" +
       "SELECT * FROM BotSaveNick;" +
-      "SELECT count(*) as count from BotLog+select count(*) as count from BotChat;",
+      "SELECT count(*) as count from BotLog" +
+      "select count(*) as count from BotChat;",
     await function (err, rows) {
       result.hackcount = rows[0][0].hackcount;
       result.channelcount = rows[1][0].channelcount;
