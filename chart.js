@@ -47,12 +47,12 @@ async function total() {
   let totalApiCount = [];
   let data = await axios.get(`http://${IP}:3000/total`);
 
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < data.data.length; i++) {
     labelDate[i] = data.data[i].date;
     totalApiCount[i] = data.data[i].cnt;
   }
 
-  let ctx = document.getElementById("myChart").getContext("2d");
+  let ctx = document.getElementById("totalapi").getContext("2d");
   let myChart = new Chart(ctx, {
     type: "line",
     data: {
