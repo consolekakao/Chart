@@ -32,6 +32,36 @@ app.get("/totalapicount",function(req,res){
 
     }
     )
+    app.post("/score",function(req,res){
+      console.log(req.body)
+      // let connection = mysql.createConnection({
+      //     host: config.host,
+      //     port: config.port,
+      //     user: config.user,
+          
+      //     password: config.password,
+      //     database: config.database,
+      //   });
+  
+      //   connection.connect();
+      //   let result = [];
+      //   connection.query(`SELECT count(*) as cnt,servername from BotLog group by servername order by cnt desc limit 5`
+      //   ,async function(err,rows){
+      //   for(let i=0;i<rows.length;i++){
+      //     let inData = {};
+      //     inData.servername = encodeURI(rows[i].servername);
+      //     inData.cnt = encodeURI(rows[i].cnt);
+      //     result.push(inData)
+      //   }
+      //   res.send(result) 
+      // })
+        
+  
+      })
+
+
+
+
 
 
     app.get("/serverrank",function(req,res){
