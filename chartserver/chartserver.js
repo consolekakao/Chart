@@ -32,6 +32,56 @@ app.get("/totalapicount",function(req,res){
 
     }
     )
+//##################################################################
+// 스코어 체크부분
+    app.post("/score",function(req,res){
+      console.log(req.body)
+      let connection = mysql.createConnection({
+        host: config.host,
+        port: config.port,
+        user: config.user,
+        password: config.password,
+        database: config.database,
+      });
+
+      connection.connect();
+      connection.query(`truncate custom`)
+      console.log(req.body.length)
+      for(let i = 0; i< req.body.length;i++){
+        connection.query(`insert into custom (name,score) values ("${req.body[i]}",0)`)
+      }
+    })
+
+
+    app.post("/minus",function(req,res){
+      let connection = mysql.createConnection({
+        host: config.host,
+        port: config.port,
+        user: config.user,
+        password: config.password,
+        database: config.database,
+      });
+      
+      connection.connect();
+        connection.query(`update custom set score = "${req.body[1]}" where idx = "${req.body[0]+1}" `)
+      res.send();
+    })
+
+
+
+    app.post("/plus",function(req,res){
+      let connection = mysql.createConnection({
+        host: config.host,
+        port: config.port,
+        user: config.user,
+        password: config.password,
+        database: config.database,
+      });
+      
+      connection.connect();
+        connection.query(`update custom set score = "${req.body[1]}" where idx = "${req.body[0]+1}" `)
+      res.send();
+    })
 
 
     app.get("/serverrank",function(req,res){
@@ -39,7 +89,6 @@ app.get("/totalapicount",function(req,res){
             host: config.host,
             port: config.port,
             user: config.user,
-            
             password: config.password,
             database: config.database,
           });
