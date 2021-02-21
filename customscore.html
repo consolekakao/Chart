@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="col-lg-2">
+        <div class="input-group" id="main">
+          <input type="text" class="form-control" id="peopleNumber" placeholder="참여인원수 입력">
+          <span class="input-group-btn">
+            <button class="btn btn-default" id="btn" onclick="inputPeople(document.getElementById('peopleNumber').value)" type="button">확인</button>
+          </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+        <div style="width: 300px;"> <ul class="list-group" >
+        <div id="setting"/></ul>
+        </div>
+
+</body>
+</html>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    function minus(name,id){
+        if(document.getElementById(id).innerHTML == 0) return;
+        document.getElementById(id).innerHTML = document.getElementById(id).innerHTML - 1
+        let data = []
+        data.push(name);
+        data.push(document.getElementById(id).innerHTML);
+        axios.post('http://localhost:3000/minus',data);
+    }
+    function plus(idx,id){
+        document.getElementById(id).innerHTML = Number(document.getElementById(id).innerHTML) + 1
+        let data = []
+        data.push(idx);
+        data.push(document.getElementById(id).innerHTML);
+        axios.post('http://localhost:3000/plus',data);
+    }
+    function inputPeople(n){
+        
+        
+        n = Number(n);
+        for(let i=0;i<n;i++){
+            document.getElementById('setting').innerHTML += `
+            <li class="list-group-item">
+            ${i+1}번째 참가자 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="text" class="form-control" id="people${i}" placeholder="이름입력">
+            </li>`
+        }
+        
+        document.getElementById('setting').innerHTML += `<br/><button onclick="submit(${n})">완료</button>`
+       
+    }
+
+    function submit(n){
+        let data = [];
+        for(let i = 0; i<n; i++){
+            data.push(document.getElementById("people"+i).value)            
+        }
+
+        axios.post('http://localhost:3000/score',data);
+
+
+
+
+        for(let i=0;i<n;i++){
+            console.log(data[i].value)
+            document.getElementById('setting').innerHTML += `
+            <li class="list-group-item" id="${data[i]}">${data[i]}
+                <span class="badge">현재점수 <span id="score${i}">0</span></span>
+                <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default"  onclick="minus(${i},'score${i}')">-1</button>
+                <button type="button" class="btn btn-default"  onclick="plus(${i},'score${i}')">+1</button>
+              </div>
+            </li>
+            `
+        }
+      
+        
+    }
+
+
+    
+
+</script>
